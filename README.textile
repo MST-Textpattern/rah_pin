@@ -1,0 +1,7 @@
+h1. rah_pin
+
+p. A tiny "Textpattern":http://www.textpattern.com plugin that allow pinning images to Textpattern articles. Works entirely with JavaScript.
+
+h2. Compatibility and requirements
+
+* Textpattern v4.4.1
