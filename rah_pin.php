@@ -28,30 +28,27 @@
 		if($event != 'article')
 			return;
 		
-		$id = !empty($GLOBALS['ID']) ? $GLOBALS['ID'] : gps('ID');
+		$id = !empty($GLOBALS['ID']) ? $GLOBALS['ID'] : (int) gps('ID');
 		
-		$ids = !isset($_POST['Image']) && $id ? 
-			fetch('Image', 'textpattern', 'ID', $id) : ps('Image');
-		
-		$ids = explode(',', $ids);
-		
-		foreach($ids as $key => $img) {
-			
-			$img = trim($img);
-			
-			if(!empty($img) && is_numeric($img)) {
-				$sql[] = "'" . doSlash($img) . "'";
-			}
+		if(!isset($_POST['Image']) && $id) {
+			$ids = fetch('Image', 'textpattern', 'ID', $id);
 		}
+		
+		else {
+			$ids = ps('Image');
+		}
+		
+		$ids = implode(',', quote_list(array_filter(do_list($ids), 'is_numeric')));
 		
 		$js = array();
 		
-		if(isset($sql)) {
+		if($ids) {
+			
 			$rs = 
 				safe_rows(
 					'id, ext, thumbnail',
 					'txp_image',
-					'id in(' . implode(',' , $sql) .')'
+					"id in({$ids})"
 				);
 			
 			foreach($rs as $a) {
