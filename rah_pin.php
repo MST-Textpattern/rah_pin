@@ -28,9 +28,10 @@
 		if($event != 'article')
 			return;
 		
-		$id = isset($GLOBALS['ID']) && !empty($GLOBALS['ID']) ? $GLOBALS['ID'] : gps('ID');
+		$id = !empty($GLOBALS['ID']) ? $GLOBALS['ID'] : gps('ID');
 		
-		$ids = !isset($_POST['Image']) && $id ? fetch('Image', 'textpattern', 'ID', $id) : ps('Image');
+		$ids = !isset($_POST['Image']) && $id ? 
+			fetch('Image', 'textpattern', 'ID', $id) : ps('Image');
 		
 		$ids = explode(',', $ids);
 		
